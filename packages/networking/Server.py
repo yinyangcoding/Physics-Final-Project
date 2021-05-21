@@ -1,5 +1,5 @@
 import socket
-from Connection import Connection
+from .Connection import Connection
 
 class Server(Connection):
     def __init__(self, ip="", port=0):
