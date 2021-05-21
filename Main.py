@@ -1,6 +1,9 @@
-from packages.Connection import Connection
+from packages.networking.Connection import Connection
+from packages.networking.Server import Server
+from packages.networking.Client import Client
 
+test = Server("127.0.0.1", 1337)
 
-test = Connection("127.0.0.1", 12)
+test.bind()
 
-print("{}:{}".format(test.ip, test.port))
+test.close()
