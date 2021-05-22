@@ -43,3 +43,7 @@ class Connection(object):
             # Throws error and returns false if exception is raised
             print(e)
             return False
+
+    # Closes the open connection
+    def close(self, interface):
+        return interface.close()

@@ -17,3 +17,7 @@ class Client(Connection):
     # Receives data using superclass method
     def receive(self):
         return super().receive(self.sock)
+    
+    # Closes the open connection using Connection
+    def close(self):
+        return super().close(self.sock)

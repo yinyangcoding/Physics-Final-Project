@@ -25,6 +25,6 @@ class Server(Connection):
     def receive(self):
         return super().receive(self.conn)
 
-    # Closes the open connection
+    # Closes the open connection by calling super
     def close(self):
-        return self.conn.close()
+        return super().close(self.conn)
