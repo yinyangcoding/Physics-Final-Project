@@ -8,12 +8,16 @@ class Connection(object):
         self.ip = ip
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.transmitionTerminator = "/0/"
         
     # Sends data to the port using given interface
     def send(self, interface, msg=""):
         # Make sure msg is written
         if not msg:
             return False
+        
+        # Appends transmission terminator
+        msg += "/0/"
 
         try:
             # Return result of sending msg
@@ -28,7 +32,12 @@ class Connection(object):
     def receive(self, interface):
         try:
             # Returns the data if successful
-            return str(interface.recv(1024).decode("ascii"))
+            ## Loops through and ensures transmission is complete
+            data = ""
+            while data[-3:] != self.transmitionTerminator:
+                data += str(interface.recv(1024).decode("ascii"))
+            
+            return data[:-3]
 
         except Exception as e:
             # Throws error and returns false if exception is raised
