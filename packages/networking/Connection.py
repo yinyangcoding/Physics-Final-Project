@@ -7,7 +7,9 @@ class Connection(object):
         # Construct the object
         self.ip = ip
         self.port = port
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = socket.socket()
+        self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
         self.transmitionTerminator = "/0/"
         
     # Sends data to the port using given interface
@@ -34,10 +36,10 @@ class Connection(object):
             # Returns the data if successful
             ## Loops through and ensures transmission is complete
             data = ""
-            while data[-3:] != self.transmitionTerminator:
+            while data[-1 * len(self.transmitionTerminator):] != self.transmitionTerminator:
                 data += str(interface.recv(1024).decode("ascii"))
             
-            return data[:-3]
+            return data[:-1 * len(self.transmitionTerminator)]
 
         except Exception as e:
             # Throws error and returns false if exception is raised

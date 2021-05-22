@@ -6,4 +6,6 @@ test = Server("127.0.0.1", 1337)
 
 test.bind()
 
+test.send("This is a test!")
+
 test.close()
