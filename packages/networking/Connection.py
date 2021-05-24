@@ -1,6 +1,5 @@
 import socket
 
-
 # Parent class for Client and Server
 class Connection(object):
     def __init__(self, ip="", port=0):
