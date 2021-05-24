@@ -6,7 +6,7 @@ from packages.cipher import *
 import threading
 import time
 
-PORT = 1334
+PORT = 1337
 MESSAGE = "This is a test."
 
 SERVER_HEADER = "\n====== Server ======"
@@ -26,9 +26,11 @@ client = Client("localhost", PORT)
 # Thread the bind
 bindThread = threading.Thread(target=server.bind)
 
-# Connect server to client and let the thread finish
+# Connect server to client
 bindThread.start()
 client.connect()
+
+# Let thread finish or they get mad ¯\_(ツ)_/¯
 time.sleep(1)
 
 # Send unciphered
