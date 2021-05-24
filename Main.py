@@ -1,11 +1,61 @@
 from packages.networking.Connection import Connection
 from packages.networking.Server import Server
 from packages.networking.Client import Client
+from packages.cipher import *
 
-test = Server("127.0.0.1", 1337)
+import threading
+import time
 
-test.bind()
+PORT = 1334
+MESSAGE = "This is a test."
 
-test.send("This is a test!")
+SERVER_HEADER = "\n====== Server ======"
+CLIENT_HEADER = "\n====== Client ======"
 
-test.close()
+SENT = "\tSENT:"
+RECEIVED = "\tRECV:"
+
+BASE = "BASE:\t"
+CIPHER = "CIPHERED:\t"
+DECIPHER = "DECIPHERED:\t"
+
+server = Server("localhost", PORT)
+client = Client("localhost", PORT)
+
+
+# Thread the bind
+bindThread = threading.Thread(target=server.bind)
+
+# Connect server to client and let the thread finish
+bindThread.start()
+client.connect()
+time.sleep(1)
+
+# Send unciphered
+print(SERVER_HEADER)
+exit = server.send(MESSAGE)
+print(SENT)
+print(MESSAGE)
+
+# Receive
+print(CLIENT_HEADER)
+print(RECEIVED)
+print(client.receive())
+
+# Send ciphered
+print(SERVER_HEADER)
+server.send(cipher(MESSAGE))
+print(SENT)
+print(BASE + MESSAGE)
+print(CIPHER + cipher(MESSAGE))
+
+# Receive
+print(CLIENT_HEADER)
+msg = client.receive()
+print(RECEIVED)
+print(BASE + msg)
+print(DECIPHER + decipher(msg))
+
+# Close connection
+client.close()
+server.close()
