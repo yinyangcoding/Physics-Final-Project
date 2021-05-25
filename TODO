@@ -1,4 +1,4 @@
 ✔ - Add comments to server code. Looks like Jayden wrote it (ノಠ益ಠ)ノ彡┻━┻
 ✔ - Add a terminator character to be looked for by the listener to know when the message ends
 ✔ - Thread it so it can actually load
-   - Integrate cipher
+   - Integrate cipher 
