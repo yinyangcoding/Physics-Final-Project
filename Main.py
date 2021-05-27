@@ -6,7 +6,7 @@ from packages.cipher import *
 import threading
 import time
 
-PORT = 4444
+PORT = 1337
 MESSAGE = "This is a test."
 
 SERVER_HEADER = "\n====== Server ======"
@@ -34,43 +34,32 @@ client.connect()
 # Let thread finish or they get mad ¯\_(ツ)_/¯
 time.sleep(1)
 
+exampleCipher = cipher(MESSAGE)
+exampleCipher = "{}{}".format(exampleCipher[0], exampleCipher[1])
+
 # Send unciphered
 print(SERVER_HEADER)
-exit = server.send(MESSAGE)
 print(SENT)
-print(MESSAGE)
+print("{}{}".format(BASE, MESSAGE))
+server.send(MESSAGE)
 
-# Receive
 print(CLIENT_HEADER)
 print(RECEIVED)
-print(client.receive())
+print("{}{}".format(BASE, client.receive()))
 
 # Send ciphered
 print(SERVER_HEADER)
-
-# Break tuple
-cPack = cipher(MESSAGE)
-
-server.send("{}{}".format(cPack[0], cPack[1]))
+server.send(MESSAGE, True)
 print(SENT)
-print(BASE + MESSAGE)
-print(CIPHER + str(cPack[0]) + str(cPack[1]))
-print(KEY + str(cPack[1]))
+print("{}{}".format(CIPHER, exampleCipher))
+print("{}{}".format(BASE, MESSAGE))
 
-# Receive
+
 print(CLIENT_HEADER)
-msg = client.receive()
-
 print(RECEIVED)
-print(BASE + msg)
+print("{}{}".format(CIPHER, exampleCipher))
+print("{}{}".format(BASE, client.receive(True)))
 
-# Separate the key
-key = int(msg[-1])
-msg = msg[:-1]
-
-cPack = (msg, key)
-print(DECIPHER + decipher(cPack))
-print(KEY + str(key))
 
 # Close connection
 client.close()

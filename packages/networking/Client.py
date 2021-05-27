@@ -11,12 +11,12 @@ class Client(Connection):
         return self.sock.connect((self.ip, self.port))
     
     # Sends data using superclass method
-    def send(self, msg=""):
-        return super().send(self.sock, msg)
+    def send(self, msg="", isCiphered=False):
+        return super().send(self.sock, msg, isCiphered)
     
     # Receives data using superclass method
-    def receive(self):
-        return super().receive(self.sock)
+    def receive(self, isCiphered=False):
+        return super().receive(self.sock, isCiphered)
     
     # Closes the open connection using Connection
     def close(self):

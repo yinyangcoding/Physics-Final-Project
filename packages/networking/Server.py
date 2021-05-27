@@ -18,12 +18,12 @@ class Server(Connection):
         self.conn, self.addr = self.sock.accept()
     
     # Calls superclass send with interface
-    def send(self, msg=""):
-        return super().send(self.conn, msg)
+    def send(self, msg="", isCiphered=False):
+        return super().send(self.conn, msg, isCiphered)
 
     # Calls superclass receive with interface
-    def receive(self):
-        return super().receive(self.conn)
+    def receive(self, isCiphered=False):
+        return super().receive(self.conn, isCiphered)
 
     # Closes the open connection by calling super
     def close(self):
