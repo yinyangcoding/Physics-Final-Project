@@ -22,8 +22,12 @@ def chartSetter(alphabet):
 
 
 def cipher(plain_text=""):
+    
     if not plain_text:
         return False
+
+    # Creating strings for uppercase and lowercause alphabets, along 
+    # with uppercase and lowercase Vigenere charts
     LOWER_AB = "abcdefghijklmnopqrstuvwxyz"
     UPPER_AB = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     LOWER_CHART = chartSetter(LOWER_AB)
@@ -32,40 +36,31 @@ def cipher(plain_text=""):
     cipher_text = ""
     index = 0
 
-    #index = int(random.randrange(0, len(keyword_list)))
-    
+    # A list of keywords to cycle through randomly for every message that is ciphered
     keyword_list = ["key", "code", "word", "pythn", "quack"]
-    
     index = int(random.randrange(0, 5))
-    
     key_word = keyword_list[index]
-
-
-    #if not(key_word.isalnum()):
-        #while not(key_word.isalnum()):
-            #index = int(random.randrange(0, len(keyword_list)))
-            #key_word = keyword_list[index]
     
-    if len(key_word) > 5:
-        key_word = key_word[:6]
-    
-
+    # The variable "y" is used to cycle through the letters of key_word
     y = 0
     for x in plain_text:
         if y >= len(key_word):
             y = 0
-        if x == " ":
+        # If the character in plain_text is not a letter or number, it is simply appended to cipher_text
+        if x == " " or not (x.isalnum()):
             cipher_text += x 
-
+        
+        # Using the index of the current letter of plain_text and of key_word,
+        # a row and column can be accessed in the 2D array (Vigenere chart)
         if x in LOWER_AB:
             cipher_text += LOWER_CHART[LOWER_AB.index(key_word[y])][LOWER_AB.index(x)] 
         elif x in UPPER_AB:
             cipher_text += UPPER_CHART[UPPER_AB.index(key_word[y].upper())][UPPER_AB.index(x)]
         else:
             continue
-
         y+=1
 
+    # Returns a tuple of the cipher text and the index of the key_word used (from the list) 
     return (cipher_text, index)
 
 # Deciphers the inputted message
@@ -92,8 +87,14 @@ def decipher(cipher_package):
     for x in cipher_text:
         if y >= len(key_word):
             y = 0
-        if x == " ":
-            plain_text += " "
+        if x == " " or not (x.isalnum()):
+            plain_text += x
+        
+        # For deciphering, the row with the current letter of key_word will be accessed,
+        # and the index of the column in which the current letter of cipher_text is found
+        # will be accessed. Using that index, the plaintext letter will be found in the 
+        # lowercase or uppercase alphabet strings 
+
         if x in LOWER_AB:
             plain_text += LOWER_AB[LOWER_CHART[LOWER_AB.index(key_word[y])].index(x)]
         elif x in UPPER_AB:
@@ -102,16 +103,4 @@ def decipher(cipher_package):
             continue
         y+=1
 
-    # General idea: iterating through each letter, access the row of the chart using each
-    # character of key_word. Then, find the index of the column in which the current 
-    # cipher_text letter exists. Using that index, trace the plain text letter used, and
-    # append that to the string plain_text
-
-
     return plain_text
-
-
-
-print(cipher("Matt is a cutie"))
-
-print(decipher(cipher("Matt is a cutie")))
