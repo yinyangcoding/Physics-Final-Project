@@ -18,6 +18,8 @@ class Connection(object):
             return False
         
         # Appends transmission terminator
+        # Since msg is a tuple (or can be a tuple), that needs to be checked before appending "/0"
+        # We can do msg[0] += "/0"
         msg += "/0/"
 
         try:
