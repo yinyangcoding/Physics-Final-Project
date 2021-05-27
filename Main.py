@@ -6,7 +6,7 @@ from packages.cipher import *
 import threading
 import time
 
-PORT = 1322
+PORT = 1337
 MESSAGE = "This is a test."
 
 SERVER_HEADER = "\n====== Server ======"
@@ -34,16 +34,32 @@ client.connect()
 # Let thread finish or they get mad ¯\_(ツ)_/¯
 time.sleep(1)
 
+exampleCipher = cipher(MESSAGE)
+exampleCipher = "{}{}".format(exampleCipher[0], exampleCipher[1])
 
 # Send unciphered
+print(SERVER_HEADER)
+print(SENT)
+print("{}{}".format(BASE, MESSAGE))
 server.send(MESSAGE)
-print(client.receive(True))
 
-print()
-print()
-# Receive
+print(CLIENT_HEADER)
+print(RECEIVED)
+print("{}{}".format(BASE, client.receive()))
+
+# Send ciphered
+print(SERVER_HEADER)
 server.send(MESSAGE, True)
-print(client.receive(True))
+print(SENT)
+print("{}{}".format(CIPHER, exampleCipher))
+print("{}{}".format(BASE, MESSAGE))
+
+
+print(CLIENT_HEADER)
+print(RECEIVED)
+print("{}{}".format(CIPHER, exampleCipher))
+print("{}{}".format(BASE, client.receive(True)))
+
 
 # Close connection
 client.close()

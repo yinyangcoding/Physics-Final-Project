@@ -1,4 +1,3 @@
-from os import cpu_count
 import socket
 
 from .. import cipher
