@@ -24,6 +24,7 @@ REAL_TIME = False
 This will then send a cleartext transmission and then a ciphered transmission
 
 
+
 **Without preset demonstration:**
 
 Set (within Main.py):
@@ -33,7 +34,7 @@ REAL_TIME = True
 ```
 
 
-***Respond to the prompts as follows:***
+*Respond to the prompts as follows:*
 
 y: cipher transmission
 
@@ -48,6 +49,8 @@ Enter desired message to transmit:
 ```
 Message: 
 ```
+
+
 
 ## Using Web Demonstration
 Follow instructions within webVisibilityDemonstration/instructions.txt
