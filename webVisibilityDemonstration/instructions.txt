@@ -1,0 +1,5 @@
+Run with Live Server, Python SimpleHTTPServer, etc.
+
+Use Burp Suite or similar program to view post
+
+Send credentials and observe visibility
