@@ -9,6 +9,8 @@ import time
 PORT = 1337
 MESSAGE = "This is a test."
 
+REAL_TIME = True
+
 SERVER_HEADER = "\n====== Server ======"
 CLIENT_HEADER = "\n====== Client ======"
 
@@ -37,28 +39,42 @@ time.sleep(1)
 exampleCipher = cipher(MESSAGE)
 exampleCipher = "{}{}".format(exampleCipher[0], exampleCipher[1])
 
-# Send unciphered
-print(SERVER_HEADER)
-print(SENT)
-print("{}{}".format(BASE, MESSAGE))
-server.send(MESSAGE)
+if REAL_TIME:
+    while True:
+        try:
+            encryptPromt = str(input("Encrypt message (y/n): "))
 
-print(CLIENT_HEADER)
-print(RECEIVED)
-print("{}{}".format(BASE, client.receive()))
+            encryptMessage = encryptPromt == "y"
 
-# Send ciphered
-print(SERVER_HEADER)
-server.send(MESSAGE, True)
-print(SENT)
-print("{}{}".format(CIPHER, exampleCipher))
-print("{}{}".format(BASE, MESSAGE))
+            server.send(input("Message: "), encryptMessage)
+            print(CLIENT_HEADER)
+            print("{} {}".format(RECEIVED, client.receive(encryptMessage)))
+        except KeyboardInterrupt:
+            break
+
+else:
+    # Send unciphered
+    print(SERVER_HEADER)
+    print(SENT)
+    print("{}{}".format(BASE, MESSAGE))
+    server.send(MESSAGE)
+
+    print(CLIENT_HEADER)
+    print(RECEIVED)
+    print("{}{}".format(BASE, client.receive()))
+
+    # Send ciphered
+    print(SERVER_HEADER)
+    server.send(MESSAGE, True)
+    print(SENT)
+    print("{}{}".format(CIPHER, exampleCipher))
+    print("{}{}".format(BASE, MESSAGE))
 
 
-print(CLIENT_HEADER)
-print(RECEIVED)
-print("{}{}".format(CIPHER, exampleCipher))
-print("{}{}".format(BASE, client.receive(True)))
+    print(CLIENT_HEADER)
+    print(RECEIVED)
+    print("{}{}".format(CIPHER, exampleCipher))
+    print("{}{}".format(BASE, client.receive(True)))
 
 
 # Close connection
