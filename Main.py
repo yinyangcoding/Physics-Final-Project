@@ -46,7 +46,7 @@ if REAL_TIME:
 
             encryptMessage = encryptPromt == "y"
 
-            server.send(input("Message: "), encryptMessage)
+            server.send(str(input("Message: ")), encryptMessage)
             print(CLIENT_HEADER)
             print("{} {}".format(RECEIVED, client.receive(encryptMessage)))
         except KeyboardInterrupt:
